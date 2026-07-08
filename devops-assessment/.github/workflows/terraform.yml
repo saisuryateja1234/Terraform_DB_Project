@@ -36,8 +36,6 @@ jobs:
         working-directory: infra
 
       - name: Terraform init
-        # No remote backend credentials in CI for this assessment,
-        # so we initialize without a backend to run validate/plan locally.
         run: terraform init -backend=false
 
       - name: Terraform validate
@@ -45,10 +43,6 @@ jobs:
 
       - name: Terraform plan
         id: plan
-        # Actual AWS deployment is not required for this assessment.
-        # AWS credentials would normally be provided via OIDC + configure-aws-credentials
-        # and this step would run a real `terraform plan`. Here we keep it plan-only
-        # and tolerate missing credentials so the workflow still demonstrates the pipeline.
         run: |
           terraform plan \
             -var-file="${{ matrix.environment }}.tfvars" \
