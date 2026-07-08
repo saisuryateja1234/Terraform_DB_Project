@@ -1,9 +1,3 @@
--- 002_seed_data.sql
--- Seeds hotel_bookings with 120 rows spread across multiple cities,
--- organizations, and statuses, with created_at relative to NOW() so the
--- "last 30 days" query in the assessment always has real matches,
--- regardless of when this is run.
-
 DO $$
 DECLARE
     v_cities   TEXT[] := ARRAY['delhi', 'mumbai', 'bangalore', 'chennai', 'hyderabad'];
