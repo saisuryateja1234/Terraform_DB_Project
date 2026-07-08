@@ -18,29 +18,24 @@ resource "aws_security_group" "rds" {
   description = "Allow DB traffic only from ECS/Fargate tasks"
   vpc_id      = var.vpc_id
 
+  ingress {
+    description     = "Allow DB access from ECS/Fargate security groups"
+    from_port       = var.db_port
+    to_port         = var.db_port
+    protocol        = "tcp"
+    security_groups = var.allowed_security_group_ids
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   tags = merge(var.tags, {
     Name = "${local.name}-rds-sg"
   })
-}
-
-resource "aws_security_group_rule" "rds_ingress_from_ecs" {
-  for_each                 = toset(var.allowed_security_group_ids)
-  type                      = "ingress"
-  from_port                 = var.db_port
-  to_port                   = var.db_port
-  protocol                  = "tcp"
-  security_group_id         = aws_security_group.rds.id
-  source_security_group_id  = each.value
-  description               = "Allow DB access from ECS/Fargate security group ${each.value}"
-}
-
-resource "aws_security_group_rule" "rds_egress_all" {
-  type              = "egress"
-  from_port         = 0
-  to_port           = 0
-  protocol          = "-1"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.rds.id
 }
 
 resource "aws_db_instance" "this" {
