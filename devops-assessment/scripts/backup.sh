@@ -1,14 +1,3 @@
-#!/usr/bin/env bash
-# backup.sh
-# Creates a timestamped logical backup of the local hotelbook database
-# running in the "db" docker compose service.
-#
-# Usage:
-#   ./scripts/backup.sh
-#
-# Output:
-#   backups/hotelbook_backup_YYYYmmdd_HHMMSS.sql
-
 set -euo pipefail
 
 DB_SERVICE="db"
