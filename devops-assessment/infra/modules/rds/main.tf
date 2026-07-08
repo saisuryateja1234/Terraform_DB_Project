@@ -10,9 +10,6 @@ resource "aws_db_subnet_group" "this" {
     Name = "${local.name}-db-subnet-group"
   })
 }
-
-# RDS must only be reachable from the ECS/Fargate security group(s) passed in.
-# No ingress from 0.0.0.0/0 anywhere in this resource.
 resource "aws_security_group" "rds" {
   name        = "${local.name}-rds-sg"
   description = "Allow DB traffic only from ECS/Fargate tasks"
