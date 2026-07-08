@@ -1,13 +1,3 @@
-#!/usr/bin/env bash
-# restore.sh
-# Restores a backup produced by backup.sh into a FRESH database
-# (hotelbook_restore_test) inside the same running "db" container,
-# so restore can be verified without touching the live "hotelbook" database.
-#
-# Usage:
-#   ./scripts/restore.sh                     # restores the most recent backup
-#   ./scripts/restore.sh path/to/backup.sql  # restores a specific backup file
-
 set -euo pipefail
 
 DB_SERVICE="db"
