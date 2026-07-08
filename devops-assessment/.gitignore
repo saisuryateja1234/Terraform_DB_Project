@@ -1,4 +1,3 @@
-# Terraform
 **/.terraform/*
 *.tfstate
 *.tfstate.*
@@ -13,13 +12,11 @@ override.tf.json
 *_override.tf
 *_override.tf.json
 
-# Never commit real secrets
+
 secrets.tfvars
 
-# Local backups produced by scripts/backup.sh
 backups/*.sql
 !backups/.gitkeep
 
-# OS/editor cruft
 .DS_Store
 *.swp
