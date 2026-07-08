@@ -1,11 +1,6 @@
 locals {
   name = "${var.project_name}-${var.environment}"
 }
-
-# ---------------------------------------------------------------------------
-# Security groups
-# ---------------------------------------------------------------------------
-
 resource "aws_security_group" "alb" {
   name        = "${local.name}-alb-sg"
   description = "Allow inbound HTTP from the internet to the ALB"
