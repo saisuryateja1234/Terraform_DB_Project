@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:15
+    container_name: hotelbook_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: app_admin
+      POSTGRES_PASSWORD: local_dev_password
+      POSTGRES_DB: hotelbook
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      # postgres's init entrypoint only picks up *files* directly under
+      # docker-entrypoint-initdb.d (run once, in lexical order, only when
+      # the data volume is first created) - so we bind individual files
+      # rather than the parent folders.
+      - ./db/migrations/001_create_tables.sql:/docker-entrypoint-initdb.d/001_create_tables.sql:ro
+      - ./db/seed/002_seed_data.sql:/docker-entrypoint-initdb.d/002_seed_data.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app_admin -d hotelbook"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  db_data:
