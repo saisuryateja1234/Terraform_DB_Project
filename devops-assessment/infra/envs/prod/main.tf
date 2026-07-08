@@ -7,18 +7,6 @@ terraform {
       version = "~> 5.0"
     }
   }
-
-  # Each environment keeps a separate state file.
-  # For real usage, point this at an S3 bucket + DynamoDB lock table
-  # dedicated to the dev environment, e.g.:
-  #
-  # backend "s3" {
-  #   bucket         = "yourcompany-terraform-state"
-  #   key            = "devops-assessment/prod/terraform.tfstate"
-  #   region         = "us-east-1"
-  #   dynamodb_table = "terraform-locks"
-  #   encrypt        = true
-  # }
   backend "local" {
     path = "terraform-prod.tfstate"
   }
